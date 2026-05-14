@@ -1,28 +1,28 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Usuario } from "./Usuario";
+import { User } from "./User";
 import { IsNotEmpty, IsString, MinLength } from "class-validator";
 
 
 @Entity()
-export class Tarefa{
+export class Task{
     @PrimaryGeneratedColumn()
-    identificador!: number;
+    idTask!: number;
 
     @Column("varchar")
     @IsNotEmpty()
     @IsString()
     @MinLength(5)
-    tituloTarefa!:string;
+    taskTitle!:string;
 
     @Column("text")
     @IsNotEmpty()
     @IsString()
-    conteudo!: string;
+    content!: string;
 
     @Column({type: "boolean", default: true})
-        estaAtivo!: boolean;
+        isActive!: boolean;
     
 
-    @ManyToOne(()=> Usuario, (usuario) => usuario.tarefa,{onDelete: "CASCADE"})
-    usuario!:Usuario;
+    @ManyToOne(()=> User, (user) => user.task,{onDelete: "CASCADE"})
+    user!:User;
 }

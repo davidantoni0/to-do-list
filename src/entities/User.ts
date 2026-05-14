@@ -1,22 +1,22 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
-import { Tarefa } from "./Tarefa";
+import { Task } from "./Task";
 
 @Entity()
-export class Usuario{
+export class User{
     @PrimaryGeneratedColumn()
-    identificador!: number;
+    idUser!: number;
 
     @Column("varchar")
     @IsNotEmpty()
     @IsString()
-    nome!: string;
+    name!: string;
 
     @Column("varchar")
     @IsNotEmpty()
     @IsString()
-    sobrenome!: string;
+    lastName!: string;
 
     @Column("varchar", { unique: true })
     @IsNotEmpty()
@@ -24,8 +24,8 @@ export class Usuario{
     email!: string;
     
     @Column({type: "boolean", default: true})
-    estaAtivo!: boolean;
+    isActive!: boolean;
     
-    @OneToMany(()=> Tarefa, (tarefa) => tarefa.usuario)
-        tarefa!:Tarefa;
+    @OneToMany(()=> Task, (task) => task.user)
+        task!:Task;
 }
