@@ -1,0 +1,27 @@
+GET http://localhost:3000/api/users/
+###
+POST http://localhost:3000/api/users/
+Content-Type: application/json
+
+{
+    "name": "test1",
+    "lastName": "test",
+    "email": "teste@test"
+}
+
+###
+DELETE http://localhost:3000/api/users/1
+###
+
+PATCH http://localhost:3000/api/users/2
+Content-Type: application/json
+
+{
+    "name": "test2",
+    "lastName": "test2",
+    "email": "teste2@test"
+}
+
+###
+
+PATCH http://localhost:3000/api/users/2/active
