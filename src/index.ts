@@ -2,12 +2,14 @@ import express from "express";
 import { Application } from "express";
 import { userRoutes } from "./routes/UserRoutes";
 import { AppDataSource } from "./data-source";
+import { taskRoutes } from "./routes/TaskRoutes";
 
 
 const api: Application = express();
 
 api.use(express.json());
 api.use("/api/users", userRoutes);
+api.use("api/tasks", taskRoutes)
 
 AppDataSource.initialize()
   .then(() => {
