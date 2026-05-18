@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/tasks
+GET http://localhost:3000/api/users/
 ###
 POST http://localhost:3000/api/users/
 Content-Type: application/json
@@ -6,7 +6,7 @@ Content-Type: application/json
 {
     "name": "test1",
     "lastName": "test",
-    "email": "teste@test"
+    "email": "teste@test.com"
 }
 
 ###
@@ -19,9 +19,9 @@ Content-Type: application/json
 {
     "name": "test2",
     "lastName": "test2",
-    "email": "teste2@test"
+    "email": "teste2@test.com"
 }
 
 ###
 
-PATCH http://localhost:3000/api/users/2/active
+PATCH http://localhost:3000/api/users/1/active

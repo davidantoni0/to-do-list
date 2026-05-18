@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+
 import { Task } from "./Task";
 
 @Entity()
