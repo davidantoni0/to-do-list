@@ -23,7 +23,7 @@ export class UserController{
     listUsers = async(req: Request, res: Response, next: NextFunction)=>{
         try {
             const users = await this.userService.listAll();
-      return res.json(users);
+      return res.status(200).json(users);
         } catch (error: unknown) {
             next(error);
         }
