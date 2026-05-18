@@ -9,7 +9,7 @@ export class TaskService {
             taskTitle,
             content,
             isActive: true})
-            return this.taskRepository.create(newTask)
+            return this.taskRepository.save(newTask)
     } 
     
     deleteTask = async (idTask: number) => {

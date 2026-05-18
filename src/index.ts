@@ -9,7 +9,7 @@ const api: Application = express();
 
 api.use(express.json());
 api.use("/api/users", userRoutes);
-api.use("api/tasks", taskRoutes)
+api.use("/api/tasks", taskRoutes)
 
 AppDataSource.initialize()
   .then(() => {
@@ -17,4 +17,4 @@ AppDataSource.initialize()
     api.listen(process.env.PORT, () => {
       console.log(`Servidor rodando em http://localhost:${process.env.PORT}`);
     });
-  }).catch((error) => console.log("Erro ao conectar no banco: ", error));
+  }).catch((error) => console.log("Erro ao conectar no banco: ", error)); 
