@@ -13,3 +13,9 @@ export class ApiError extends Error {
       super(message, 400, errors);
     }
   }
+
+  export class NotFoundError extends ApiError {
+    constructor(message: string, errors?: unknown) {
+      super(message, 404, errors);
+    }
+  }

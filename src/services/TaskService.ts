@@ -3,7 +3,7 @@ import { AppDataSource } from "../data-source";
 import { Task } from "../entities/Task";
 import { User } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
-import { BadRequestError } from "../helpers/apiError";
+import { BadRequestError, NotFoundError } from "../helpers/apiError";
 
 
 export class TaskService {
@@ -18,24 +18,40 @@ export class TaskService {
           throw new BadRequestError("Falha de validação", formattedErrors);
         }
       };
-    
+      
+    listTask = async () => {
+          return await this.taskRepository.find({ relations: ["user"] })
+    }
+      
     createTask = async (taskTitle: string, content: string, idUser: number) => {
         const user = await this.userRepository.findOneBy({ idUser: idUser })
+        if (!user) {
+            throw new NotFoundError("Usuário não encontrado.")
+        }
         return this.taskRepository.save({ taskTitle, content, user })
     } 
     
     updateTask = async (idTask: number, data: Partial<Task>) => {
-        const task = await this.taskRepository.findOneBy({ idTask })
+        const task = await this.taskRepository.findOne({
+            where: { idTask: idTask },
+            relations: ["user"]
+        })
+        if (!task) {
+            throw new NotFoundError("Task não encontrada.")
+        }
         this.taskRepository.merge(task, data)
         return await this.taskRepository.save(task);
     }
     
-    listTask = async () => {
-        return await this.taskRepository.find({ relations: ["user"] })
-    }
 
     deleteTask = async (idTask: number) => {
-        const task = await this.taskRepository.findOneBy({ idTask })
+        const task = await this.taskRepository.findOne({
+            where: { idTask: idTask },
+            relations: ["user"]
+        })
+        if (!task) {
+            throw new NotFoundError("Task não encontrada.")
+        }
         return await this.taskRepository.delete(idTask)
     }
 }

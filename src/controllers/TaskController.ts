@@ -16,8 +16,12 @@ export class TaskController {
     }
     create = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = Number(req.params.id)
             const { taskTitle, content} = req.body
+            const id = Number(req.params.id)
+            if (isNaN(id)) {
+                throw new BadRequestError("Id inválido")
+            }
+            await this.taskService.validateSchema(req.body)
             const newTask = await this.taskService.createTask(taskTitle, content, id)
             return res.status(201).json(newTask)
         } catch (error: unknown) {
@@ -31,6 +35,7 @@ export class TaskController {
             if (isNaN(taskId)) {
                 throw new BadRequestError("Id inválido.")
             }
+            await this.taskService.validateSchema(req.body, true)
             const task = await this.taskService.updateTask(taskId, req.body)
             return res.status(201).json(task)
         } catch (error : unknown) {
@@ -41,6 +46,9 @@ export class TaskController {
     delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id)
+            if (isNaN(id)) {
+                throw new BadRequestError("Id inválido")
+            }
             await this.taskService.deleteTask(id)
             return res.status(204).send()  
         } catch (error: unknown) {
