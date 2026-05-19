@@ -3,6 +3,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
 import { ApiError, BadRequestError } from "../helpers/apiError";
+import bcrypt from "bcryptjs";
 
 
 export class UserService{
@@ -17,17 +18,20 @@ export class UserService{
         }
       };
 
-    create = async (name: string, lastName: string, email: string) => {
+    create = async (userData: Partial<User>) => {
 
-        const newUser = this.userRepository.create({
-            name,
-            lastName,
-            email,
-            isActive: true
-        });
-        console.log(newUser);
-        await validate(newUser);
-        return await this.userRepository.save(newUser);
+        const existingUser = await this.userRepository.findOneBy({
+            email: userData.email,
+          });
+        if (existingUser) {
+            throw new BadRequestError("Email fornecido já está em uso!");
+        }
+        
+        const hashedPassword = await bcrypt.hash(userData.password!, 10);
+    return await this.userRepository.save({
+      ...userData,
+      password: hashedPassword,
+    });
     }
     listAll = async()=>{
         return await this.userRepository.find()
