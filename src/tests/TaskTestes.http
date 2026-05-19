@@ -2,17 +2,17 @@ GET http://localhost:3000/api/tasks
 
 ###
 
-POST http://localhost:3000/api/tasks/3
+POST http://localhost:3000/api/tasks/1
 Content-Type: application/json 
 
 {
-    "taskTitle": "teste2",
-    "content": "teste teste"
+    "taskTitle": "teste3",
+    "content": "toma"
 }
 
 ###
 
-PATCH http://localhost:3000/api/tasks/7
+PATCH http://localhost:3000/api/tasks/1
 Content-Type: application/json
 
 {
@@ -22,6 +22,6 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/tasks/13
+DELETE http://localhost:3000/api/tasks/7
 
 ###
