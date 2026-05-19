@@ -18,7 +18,6 @@
     "url": "https://github.com/davidantoni0/to-do-list/issues"
   },
   "homepage": "https://github.com/davidantoni0/to-do-list#readme",
-  
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
@@ -26,6 +25,7 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "class-validator": "^0.15.1",
     "express": "^5.2.1",
     "pg": "^8.20.0",

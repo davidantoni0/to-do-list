@@ -9,11 +9,12 @@ export class UserController{
 
     createUser = async(req: Request, res: Response, next: NextFunction)=>{
         try {
-            const{name, lastName, email} = req.body;
             await this.userService.validateSchema(req.body)
-            console.log(name, lastName, email);
-            const newUser = await this.userService.create(name,lastName, email);
-            return res.status(200).json(newUser);
+            
+            const newUser = await this.userService.create(req.body);
+
+            const { password: _, ...userPublic } = newUser;
+            return res.status(201).json(userPublic);
             
         } catch (error: unknown) {
            next(error); 
