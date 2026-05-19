@@ -2,26 +2,26 @@ GET http://localhost:3000/api/tasks
 
 ###
 
-POST http://localhost:3000/api/tasks
+POST http://localhost:3000/api/tasks/3
 Content-Type: application/json 
 
 {
     "taskTitle": "teste2",
-    "content": "teste teste" 
+    "content": "teste teste"
 }
 
 ###
 
-PATCH http://localhost:3000/api/tasks/1
+PATCH http://localhost:3000/api/tasks/7
 Content-Type: application/json
 
 {
     "taskTitle": "teste atualizado",
-    "content": "testo texto"
+    "content": "funcionando"
 }
 
 ###
 
-DELETE http://localhost:3000/api/tasks/1
+DELETE http://localhost:3000/api/tasks/13
 
 ###
