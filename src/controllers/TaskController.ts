@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { TaskService } from "../services/TaskService";
 import { BadRequestError } from "../helpers/apiError";
 
-
 export class TaskController {
     private taskService = new TaskService();
     
@@ -33,12 +32,13 @@ export class TaskController {
     updateTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const taskId = Number(req.params.id);
+            const userId = req.user_id
             if (isNaN(taskId)) {
                 throw new BadRequestError("Id inválido.");
             }
             await this.taskService.validateSchema(req.body, true);
-            const task = await this.taskService.update(taskId, req.body);
-            return res.status(201).json(task);
+            const task = await this.taskService.update(taskId, userId, req.body);
+            return res.status(200).json(task);
         } catch (error : unknown) {
             next(error);
         }
@@ -47,10 +47,12 @@ export class TaskController {
     deleteTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id);
+            const userId = req.user_id
+            const userRole = req.user_role
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
-            await this.taskService.delete(id);
+            await this.taskService.delete(id, userId, userRole!);
             return res.status(204).send();
         } catch (error: unknown) {
             next(error);

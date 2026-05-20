@@ -1,27 +1,32 @@
+@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzkzMTk4MTMsImV4cCI6MTc3OTM0ODYxM30.S3LCwRvuurRbkAwbsICh9ryyuVnVCTzs_utUWHC3FbU
+
+
 GET http://localhost:3000/api/tasks
 
 ###
 
 POST http://localhost:3000/api/tasks/1
 Content-Type: application/json 
+Authorization: Baerer {{authToken}}
 
 {
     "taskTitle": "teste3",
-    "content": "toma"
+    "content": "rua"
 }
 
 ###
 
-PATCH http://localhost:3000/api/tasks/1
+PATCH http://localhost:3000/api/tasks/2
 Content-Type: application/json
+Authorization: Baerer {{authToken}}
 
 {
     "taskTitle": "teste atualizado",
-    "content": "funcionando"
+    "content": "funcionando2"
 }
 
 ###
 
 DELETE http://localhost:3000/api/tasks/1
-
+Authorization: Baerer {{authToken}}
 ###

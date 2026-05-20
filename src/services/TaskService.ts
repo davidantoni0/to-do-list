@@ -1,9 +1,9 @@
 import { validate } from "class-validator";
 import { AppDataSource } from "../data-source";
 import { Task } from "../entities/Task";
-import { User } from "../entities/User";
+import { User, UserRole } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
-import { BadRequestError, NotFoundError } from "../helpers/apiError";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../helpers/apiError";
 
 
 export class TaskService {
@@ -31,7 +31,7 @@ export class TaskService {
         return this.taskRepository.save({ taskTitle, content, user })
     };
     
-    update = async (idTask: number, data: Partial<Task>) => {
+    update = async (idTask: number, idUser: number, data: Partial<Task>) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
             relations: ["user"]
@@ -39,18 +39,24 @@ export class TaskService {
         if (!task) {
             throw new NotFoundError("Task não encontrada.")
         }
+        if (task.user.idUser !== idUser) {
+            throw new UnauthorizedError("Você não tem permissa para atualizar esta tarefa")
+        }
         this.taskRepository.merge(task, data)
         return await this.taskRepository.save(task);
     }
     
 
-    delete = async (idTask: number) => {
+    delete = async (idTask: number, idUser: number, userRole: UserRole) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
             relations: ["user"]
         })
         if (!task) {
             throw new NotFoundError("Task não encontrada.")
+        }
+        if (userRole !== UserRole.ADMIN && task.user.idUser !== idUser) {
+            throw new UnauthorizedError("Voçê não tem permisao para atualizar esta tarefa")
         }
         return await this.taskRepository.delete(idTask)
     }
