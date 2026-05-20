@@ -8,6 +8,7 @@ export class ApiError extends Error {
       this.errors = errors;
     }
   }
+  
   export class BadRequestError extends ApiError {
     constructor(message: string, errors?: unknown) {
       super(message, 400, errors);
@@ -17,5 +18,11 @@ export class ApiError extends Error {
   export class NotFoundError extends ApiError {
     constructor(message: string, errors?: unknown) {
       super(message, 404, errors);
+    }
+  }
+
+  export class UnauthorizedError extends ApiError {
+    constructor(message: string = "Não autorizado") {
+      super(message, 401);
     }
   }
