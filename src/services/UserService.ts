@@ -2,7 +2,7 @@ import { validate } from "class-validator";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
-import { ApiError, BadRequestError } from "../helpers/apiError";
+import { ApiError, BadRequestError, NotFoundError } from "../helpers/apiError";
 import bcrypt from "bcryptjs";
 
 
@@ -16,7 +16,7 @@ export class UserService{
           const formattedErrors = formatErrors(errors);
           throw new BadRequestError("Falha de validação", formattedErrors);
         }
-      };
+    };
 
     create = async (userData: Partial<User>) => {
 
@@ -32,31 +32,36 @@ export class UserService{
       ...userData,
       password: hashedPassword,
     });
-    }
+    };
+
     listAll = async()=>{
-        return await this.userRepository.find()
-    }
+        return await this.userRepository.find();
+    };
+
     delete = async (userId: number)=>{
         const user = this.userRepository.findOne({ where:{idUser: userId}});
         return await this.userRepository.delete(userId);
-    }
+    };
+
     update = async(userId: number, data: Partial<User>)=>{
         const user = await this.userRepository.findOne({where:{idUser: userId}});
         if(!user){
-            throw new ApiError("User not found.", 404)
+            throw new NotFoundError("Usuario não encontrado.")
         }
         this.userRepository.merge(user, data)
         return await this.userRepository.save(user)
-    }
+    };
+
     toggleActive= async(userId: number)=>{
         const user = await this.userRepository.findOne({where:{idUser: userId}});
         if(!user){
-            throw new ApiError("User not found.", 404)
+            throw new NotFoundError("Usuario não encontrado.")
         }
         user.isActive = !user.isActive;
         await validate(user)
         await this.userRepository.save(user);
         return user;
-    }
+    };
+    
 
 }

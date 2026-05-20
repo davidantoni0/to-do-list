@@ -10,12 +10,9 @@ export class UserController{
     createUser = async(req: Request, res: Response, next: NextFunction)=>{
         try {
             await this.userService.validateSchema(req.body)
-            
             const newUser = await this.userService.create(req.body);
-
             const { password: _, ...userPublic } = newUser;
             return res.status(201).json(userPublic);
-            
         } catch (error: unknown) {
            next(error); 
         }
@@ -35,7 +32,7 @@ export class UserController{
             await this.userService.delete(id);
             return res.status(204).send();
         } catch (error: unknown) {
-            next(error)
+            next(error);
         }
     };
     updateUser = async(req: Request, res: Response, next: NextFunction)=>{
@@ -44,11 +41,11 @@ export class UserController{
             if (isNaN(id)) {
                 throw new BadRequestError("ID inválido");
               }
-            await this.userService.validateSchema(req.body, true)
+            await this.userService.validateSchema(req.body, true);
             const user = await this.userService.update(id, req.body);
             return res.status(200).json(user);
         } catch (error: unknown) {
-            next(error)
+            next(error);
         }
     };
     toggleActiveUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -65,7 +62,7 @@ export class UserController{
                     user,
                 });
         } catch (error: unknown) {
-            next(error)
+            next(error);
         }
     };
 }
