@@ -7,8 +7,8 @@ import { BadRequestError, NotFoundError } from "../helpers/apiError";
 
 
 export class TaskService {
-    private taskRepository = AppDataSource.getRepository(Task)
-    private userRepository = AppDataSource.getRepository(User)
+    private taskRepository = AppDataSource.getRepository(Task);
+    private userRepository = AppDataSource.getRepository(User);
 
     validateSchema = async (data: Partial<Task>, partial = false) => {
         const temp = this.taskRepository.create(data);
@@ -19,19 +19,19 @@ export class TaskService {
         }
       };
       
-    listTask = async () => {
+    list = async () => {
           return await this.taskRepository.find({ relations: ["user"] })
-    }
+    };
       
-    createTask = async (taskTitle: string, content: string, idUser: number) => {
+    create = async (taskTitle: string, content: string, idUser: number) => {
         const user = await this.userRepository.findOneBy({ idUser: idUser })
         if (!user) {
             throw new NotFoundError("Usuário não encontrado.")
         }
         return this.taskRepository.save({ taskTitle, content, user })
-    } 
+    };
     
-    updateTask = async (idTask: number, data: Partial<Task>) => {
+    update = async (idTask: number, data: Partial<Task>) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
             relations: ["user"]
@@ -44,7 +44,7 @@ export class TaskService {
     }
     
 
-    deleteTask = async (idTask: number) => {
+    delete = async (idTask: number) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
             relations: ["user"]

@@ -22,6 +22,6 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/tasks/7
+DELETE http://localhost:3000/api/tasks/1
 
 ###
