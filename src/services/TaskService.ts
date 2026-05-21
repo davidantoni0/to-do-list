@@ -68,10 +68,7 @@ export class TaskService {
         if (!task) {
             throw new NotFoundError("Task não encontrada.");
         }
-        if (
-            userRole !== UserRole.ADMIN &&
-            task.user.idUser !== idUser
-        ) {
+        if (userRole !== UserRole.ADMIN && task.user.idUser !== idUser) {
             throw new UnauthorizedError(
                 "Você não tem permissão para alterar esta task."
             );
@@ -84,5 +81,4 @@ export class TaskService {
         await this.taskRepository.save(task);
         return task;
     };
-
 }
