@@ -1,4 +1,4 @@
-@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzkzMTk4MTMsImV4cCI6MTc3OTM0ODYxM30.S3LCwRvuurRbkAwbsICh9ryyuVnVCTzs_utUWHC3FbU
+@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InVzZXIiLCJpYXQiOjE3NzkzMjIwNzgsImV4cCI6MTc3OTM1MDg3OH0.WDypbB0wfbMAXJOh9YLVdqnJpETdjUb5xDrA78AOAAg
 
 
 GET http://localhost:3000/api/tasks
@@ -11,7 +11,8 @@ Authorization: Baerer {{authToken}}
 
 {
     "taskTitle": "teste3",
-    "content": "rua"
+    "content": "rua",
+    "taskStatus": "open"
 }
 
 ###
@@ -27,6 +28,6 @@ Authorization: Baerer {{authToken}}
 
 ###
 
-DELETE http://localhost:3000/api/tasks/1
+DELETE http://localhost:3000/api/tasks/3
 Authorization: Baerer {{authToken}}
 ###

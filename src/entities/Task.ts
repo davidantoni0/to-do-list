@@ -1,8 +1,12 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
-import { IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator";
 
-
+export enum TaskStatus {
+    OPEN = "open",
+    PENDING = "pending",
+    FINALIZED = "finalized"
+}
 @Entity()
 export class Task{
     @PrimaryGeneratedColumn()
@@ -19,8 +23,10 @@ export class Task{
     @IsString()
     content!: string;
 
-    @Column({type: "boolean", default: true})
-        isActive!: boolean;
+    @Column({ type: "enum", enum: TaskStatus, default: TaskStatus.OPEN })
+    @IsNotEmpty({ message: "O campo 'TaskStatus' está  vazio" })
+    @IsEnum(TaskStatus, { message: "Status inválido('open, pending ou finalized')" })
+    taskStatus!: TaskStatus;
     
 
     @ManyToOne(()=> User, (user) => user.task,{onDelete: "CASCADE"})

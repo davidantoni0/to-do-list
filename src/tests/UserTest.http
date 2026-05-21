@@ -1,11 +1,11 @@
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzkyMzUzMjUsImV4cCI6MTc3OTI2NDEyNX0.KR19uu08OvsazRv4KuG219Ys8AGfR4VGQvFjQIt_gA0
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5MzIxOTAyLCJleHAiOjE3NzkzNTA3MDJ9.8FAa7F-UgvZB-9PmL_xV3O6WVgGMD6m2FcnOXiPlsQE
 
 
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-  "email": "teste@test.com",
+  "email": "teste2@test.com",
   "password": "123456"
 }
 
@@ -17,10 +17,11 @@ POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
-    "name": "test1",
-    "lastName": "test",
-    "email": "teste@test.com",
-    "password": "123456"
+    "name": "test2",
+    "lastName": "test2",
+    "email": "teste2@test.com",
+    "password": "123456",
+    "role": "user"
 }
 
 ###
