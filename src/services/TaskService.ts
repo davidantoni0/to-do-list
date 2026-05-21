@@ -1,6 +1,6 @@
 import { validate } from "class-validator";
 import { AppDataSource } from "../data-source";
-import { Task } from "../entities/Task";
+import { Task, TaskStatus } from "../entities/Task";
 import { User, UserRole } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../helpers/apiError";
@@ -49,7 +49,6 @@ export class TaskService {
         return await this.taskRepository.save(task);
     }
     
-
     delete = async (idTask: number, idUser: number, userRole: UserRole) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
@@ -60,4 +59,30 @@ export class TaskService {
         }
         return await this.taskRepository.delete(idTask)
     }
+
+    changeStatus = async (idTask: number, idUser: number, userRole: UserRole) => {
+        const task = await this.taskRepository.findOne({
+            where: { idTask },
+            relations: ["user"]
+        });
+        if (!task) {
+            throw new NotFoundError("Task não encontrada.");
+        }
+        if (
+            userRole !== UserRole.ADMIN &&
+            task.user.idUser !== idUser
+        ) {
+            throw new UnauthorizedError(
+                "Você não tem permissão para alterar esta task."
+            );
+        }
+        if (userRole !== UserRole.ADMIN) {
+            task.taskStatus = TaskStatus.PENDING;
+        } else {
+            task.taskStatus = TaskStatus.FINALIZED;
+        }
+        await this.taskRepository.save(task);
+        return task;
+    };
+
 }
