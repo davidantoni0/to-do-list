@@ -23,10 +23,13 @@ export class TaskService {
           return await this.taskRepository.find({ relations: ["user"] })
     };
       
-    create = async (taskTitle: string, content: string, idUser: number) => {
+    create = async (taskTitle: string, content: string, idUser: number, userRole: UserRole) => {
         const user = await this.userRepository.findOneBy({ idUser: idUser })
         if (!user) {
             throw new NotFoundError("Usuário não encontrado.")
+        }
+        if (userRole !== UserRole.ADMIN) {
+            throw new UnauthorizedError("Voçê não tem autorização para criar novas tarefas")
         }
         return this.taskRepository.save({ taskTitle, content, user })
     };
@@ -54,9 +57,6 @@ export class TaskService {
         })
         if (!task) {
             throw new NotFoundError("Task não encontrada.")
-        }
-        if (userRole !== UserRole.ADMIN && task.user.idUser !== idUser) {
-            throw new UnauthorizedError("Voçê não tem permisao para atualizar esta tarefa")
         }
         return await this.taskRepository.delete(idTask)
     }

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { TaskService } from "../services/TaskService";
 import { BadRequestError } from "../helpers/apiError";
+import { UserRole } from "../entities/User";
 
 export class TaskController {
     private taskService = new TaskService();
@@ -17,12 +18,13 @@ export class TaskController {
     createTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { taskTitle, content} = req.body;
+            const userRole = req.user_role;
             const id = Number(req.params.id);
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
             await this.taskService.validateSchema(req.body);
-            const newTask = await this.taskService.create(taskTitle, content, id);
+            const newTask = await this.taskService.create(taskTitle, content, id, userRole);
             return res.status(201).json(newTask);
         } catch (error: unknown) {
             next(error);
