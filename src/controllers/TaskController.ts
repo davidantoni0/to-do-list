@@ -54,10 +54,25 @@ export class TaskController {
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
-            await this.taskService.delete(id, userId, userRole!);
+            await this.taskService.delete(id, userId, userRole);
             return res.status(204).send();
         } catch (error: unknown) {
             next(error);
+        }
+    }
+
+    changeTaskStatus = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = Number(req.params.id);
+            const userId = req.user_id
+            const userRole = req.user_role
+            if (isNaN(id)) {
+                throw new BadRequestError("Id inválido");
+            }
+            const task = await this.taskService.changeStatus(id, userId, userRole);
+            return res.status(200).json(task);
+        } catch (error) {
+            next(error)
         }
     }
 }

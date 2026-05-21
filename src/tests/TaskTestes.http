@@ -1,5 +1,6 @@
-@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InVzZXIiLCJpYXQiOjE3NzkzMjIwNzgsImV4cCI6MTc3OTM1MDg3OH0.WDypbB0wfbMAXJOh9YLVdqnJpETdjUb5xDrA78AOAAg
-
+@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5Mzk4OTk5LCJleHAiOjE3Nzk0Mjc3OTl9.peeeLaEm47ETa7euk4qta3kZvknn9wTtGsrMgf2BPaU
+//admin @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5Mzk4OTk5LCJleHAiOjE3Nzk0Mjc3OTl9.peeeLaEm47ETa7euk4qta3kZvknn9wTtGsrMgf2BPaU
+//user @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk0MDA3NzYsImV4cCI6MTc3OTQyOTU3Nn0.a-qXrMtLZD8QjO6RLqMb3cgbsL7LHX2iaIGGtvWR0nA
 
 GET http://localhost:3000/api/tasks
 
@@ -17,7 +18,7 @@ Authorization: Baerer {{authToken}}
 
 ###
 
-PATCH http://localhost:3000/api/tasks/2
+PATCH http://localhost:3000/api/tasks/1
 Content-Type: application/json
 Authorization: Baerer {{authToken}}
 
@@ -31,3 +32,6 @@ Authorization: Baerer {{authToken}}
 DELETE http://localhost:3000/api/tasks/3
 Authorization: Baerer {{authToken}}
 ###
+
+PATCH  http://localhost:3000/api/tasks/2/changeStatus
+Authorization: Baerer {{authToken}}

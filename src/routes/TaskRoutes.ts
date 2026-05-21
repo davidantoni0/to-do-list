@@ -8,6 +8,8 @@ const taskController = new TaskController()
 router.get("/", taskController.listTasks)
 router.post("/:id", authMiddleware, taskController.createTask)
 router.patch("/:id", authMiddleware, taskController.updateTask)
+router.patch("/:id/changeStatus", authMiddleware, taskController.changeTaskStatus)
 router.delete("/:id", authMiddleware, taskController.deleteTask)
+
 
 export const taskRoutes = router
