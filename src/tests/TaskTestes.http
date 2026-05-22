@@ -35,3 +35,14 @@ Authorization: Baerer {{authToken}}
 
 PATCH  http://localhost:3000/api/tasks/2/changeStatus
 Authorization: Baerer {{authToken}}
+###
+
+PATCH  http://localhost:3000/api/tasks/2/delegate
+Content-Type: application/json
+Authorization: Baerer {{authToken}}
+
+{
+    "idUser": "3"
+}
+
+###

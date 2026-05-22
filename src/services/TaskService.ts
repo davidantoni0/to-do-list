@@ -69,15 +69,33 @@ export class TaskService {
             throw new NotFoundError("Task não encontrada.");
         }
         if (userRole !== UserRole.ADMIN && task.user.idUser !== idUser) {
-            throw new UnauthorizedError(
-                "Você não tem permissão para alterar esta task."
-            );
+            throw new UnauthorizedError("Você não tem permissão para alterar esta task.");
         }
         if (userRole !== UserRole.ADMIN) {
             task.taskStatus = TaskStatus.PENDING;
         } else {
             task.taskStatus = TaskStatus.FINALIZED;
         }
+        await this.taskRepository.save(task);
+        return task;
+    };
+
+    delegate = async (idTask: number, idUser: number, userRole: UserRole) => {
+        const task = await this.taskRepository.findOne({
+            where: { idTask },
+            relations: ["user"]
+        });
+        if (!task) {
+            throw new NotFoundError("Task não encontrada.");
+        }
+        const user = await this.userRepository.findOneBy({ idUser: idUser })
+        if (!user) {
+            throw new NotFoundError("Usuário não encontrado.")
+        }
+        if (userRole !== UserRole.ADMIN) {
+            throw new UnauthorizedError("Você não tem permissão para delegar esta task.");
+        }
+        task.user.idUser = idUser
         await this.taskRepository.save(task);
         return task;
     };

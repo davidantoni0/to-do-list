@@ -71,7 +71,25 @@ export class TaskController {
             }
             const task = await this.taskService.changeStatus(id, userId, userRole);
             return res.status(200).json(task);
-        } catch (error) {
+        } catch (error: unknown) {
+            next(error)
+        }
+    }
+
+    delegateTask = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = Number(req.params.id);
+            const userId = Number(req.body.idUser);
+            const userRole = req.user_role
+            if (isNaN(id)) {
+                throw new BadRequestError("Id inválido");
+            }
+            if (isNaN(userId)) {
+                throw new BadRequestError("Id de usuario inválido");
+            }
+            const task = await this.taskService.delegate(id, userId, userRole);
+            return res.status(200).json(task);
+        } catch (error: unknown) {
             next(error)
         }
     }
