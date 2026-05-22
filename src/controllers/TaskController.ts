@@ -34,12 +34,12 @@ export class TaskController {
     updateTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const taskId = Number(req.params.id);
-            const userId = req.user_id
+            const userRole = req.user_role
             if (isNaN(taskId)) {
                 throw new BadRequestError("Id inválido.");
             }
             await this.taskService.validateSchema(req.body, true);
-            const task = await this.taskService.update(taskId, userId, req.body);
+            const task = await this.taskService.update(taskId, userRole, req.body);
             return res.status(200).json(task);
         } catch (error : unknown) {
             next(error);
@@ -49,12 +49,11 @@ export class TaskController {
     deleteTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id);
-            const userId = req.user_id
             const userRole = req.user_role
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
-            await this.taskService.delete(id, userId, userRole);
+            await this.taskService.delete(id, userRole);
             return res.status(204).send();
         } catch (error: unknown) {
             next(error);
