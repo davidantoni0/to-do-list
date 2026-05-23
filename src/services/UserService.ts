@@ -53,11 +53,36 @@ export class UserService{
         return await this.userRepository.delete(userId);
     };
 
-    update = async(userId: number, data: Partial<User>)=>{
+    update = async(userId: number, data: Partial<User>, requestingUserId: number, userRole: UserRole)=>{
         const user = await this.userRepository.findOne({where:{idUser: userId}});
         if(!user){
             throw new NotFoundError("Usuario não encontrado.")
         }
+        
+        if((data.name || data.lastName || data.email || data.password) && userId !== requestingUserId){
+            throw new UnauthorizedError("Acesso negado. Você não pode modificar informações pessoais de outros usuários.");
+        }
+        if(data.email){
+            const existingUser = await this.userRepository.findOneBy({
+            email: data.email,
+            });
+            if(existingUser && existingUser.idUser !== userId) {
+                throw new BadRequestError("Email fornecido já está em uso!");
+            }
+        }
+        if(data.password){
+            const hashedPassword = await bcrypt.hash(data.password, 10);
+            data.password = hashedPassword;
+        }
+        if(data.role){
+            if(user.role !== UserRole.ADMIN){
+                throw new UnauthorizedError("Acesso negado. Apenas administradores podem modificar o cargo de um usuário.");
+            }
+            if(user.role === UserRole.ADMIN && requestingUserId !== userId){
+                throw new UnauthorizedError("Acesso negado. Administradores não podem modificar o cargo de outros administradores.");
+            }
+        }
+        await this.validateSchema(data, true);
         this.userRepository.merge(user, data)
         return await this.userRepository.save(user)
     };

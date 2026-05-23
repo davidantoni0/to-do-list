@@ -38,12 +38,15 @@ export class UserController{
     updateUser = async(req: Request, res: Response, next: NextFunction)=>{
         try {
             const id = Number(req.params.id);
+            const requestingUserId = req.user_id
+            const userRole = req.user_role
             if (isNaN(id)) {
                 throw new BadRequestError("ID inválido");
               }
             await this.userService.validateSchema(req.body, true);
-            const user = await this.userService.update(id, req.body);
-            return res.status(200).json(user);
+            const updatedUser = await this.userService.update(id, req.body, requestingUserId!, userRole!);
+            const { password: _, ...userPublic } = updatedUser;
+            return res.status(200).json(userPublic);
         } catch (error: unknown) {
             next(error);
         }

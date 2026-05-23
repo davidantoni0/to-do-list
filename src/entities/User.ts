@@ -19,7 +19,7 @@ export class User{
     name!: string;
 
     @Column("varchar")
-    @IsNotEmpty({message: "O campo 'e-mail' está vazio"})
+    @IsNotEmpty({message: "O campo 'lastName' está vazio"})
     @IsString()
     lastName!: string;
 
