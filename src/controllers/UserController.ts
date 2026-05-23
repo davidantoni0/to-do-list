@@ -51,14 +51,15 @@ export class UserController{
     toggleActiveUser = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id);
+            const userRole = req.user_role
             if (isNaN(id)) {
                 throw new BadRequestError("ID inválido");
               }
-            const user = await this.userService.toggleActive(id);
+            const user = await this.userService.toggleActive(id, userRole!);
             return res.json({
                 message: `Usuário ${
                 user.isActive ? "ativado" : "desativado"
-                    }   com sucesso.`,
+                    } com sucesso.`,
                     user,
                 });
         } catch (error: unknown) {

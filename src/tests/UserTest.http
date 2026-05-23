@@ -1,11 +1,12 @@
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk1MzcxMjMsImV4cCI6MTc3OTU2NTkyM30.qvqdJAiw7YcvDy4LXSJXDHADFgX-BUo02XdtibjQM8Q
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5NTQzNDk4LCJleHAiOjE3Nzk1NzIyOTh9.Mui7bsyBbOQjiehLzrA23Z5TeFpJKv-ZGKUjqerN9mM
 
+//user @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk1NDMzNzQsImV4cCI6MTc3OTU3MjE3NH0.v0vfsqkeHIdpbSpZaxT7DJMc3IzqkDzNbWrtAz-nk_Y
 
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "test2@test.com",
   "password": "123456"
 }
 ###
@@ -19,13 +20,13 @@ Content-Type: application/json
 {
     "name": "test",
     "lastName": "test",
-    "email": "test@test.com",
+    "email": "test2@test.com",
     "password": "123456",
-    "role": "user"
+    "role": "admin"
 }
 ###
 
-DELETE http://localhost:3000/api/users/2/delete
+DELETE http://localhost:3000/api/users/3/delete
 Authorization: Bearer {{authToken}}
 ###
 
@@ -39,4 +40,5 @@ Content-Type: application/json
 }
 ###
 
-PATCH http://localhost:3000/api/users/2/active
+PATCH http://localhost:3000/api/users/3/active
+Authorization: Bearer {{authToken}}

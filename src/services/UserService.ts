@@ -1,8 +1,8 @@
 import { validate } from "class-validator";
 import { AppDataSource } from "../data-source";
-import { User } from "../entities/User";
+import { User, UserRole } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
-import { ApiError, BadRequestError, NotFoundError } from "../helpers/apiError";
+import { ApiError, BadRequestError, NotFoundError, UnauthorizedError } from "../helpers/apiError";
 import bcrypt from "bcryptjs";
 
 
@@ -62,7 +62,10 @@ export class UserService{
         return await this.userRepository.save(user)
     };
 
-    toggleActive= async(userId: number)=>{
+    toggleActive = async(userId: number, userRole: UserRole)=>{
+        if (userRole !== UserRole.ADMIN) {
+            throw new UnauthorizedError("Acesso negado. Apenas administradores podem ativar ou desativar usuários.");
+          }
         const user = await this.userRepository.findOne({where:{idUser: userId}});
         if(!user){
             throw new NotFoundError("Usuario não encontrado.")
