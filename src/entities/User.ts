@@ -42,5 +42,5 @@ export class User{
     isActive!: boolean;
     
     @OneToMany(()=> Task, (task) => task.user)
-        task!:Task;
+        task!:Task[];
 }

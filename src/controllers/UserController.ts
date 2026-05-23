@@ -29,7 +29,7 @@ export class UserController{
     deleteUser = async(req: Request, res: Response, next: NextFunction)=>{
         try {
             const id = Number(req.params.id);
-            await this.userService.delete(id);
+            await this.userService.delete(id!);
             return res.status(204).send();
         } catch (error: unknown) {
             next(error);

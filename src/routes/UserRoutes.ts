@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/UserController";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 
 
@@ -9,7 +10,7 @@ const userController = new UserController();
 
 router.get("/", userController.listUsers);
 router.post("/", userController.createUser);
-router.delete("/:id", userController.deleteUser)
+router.delete("/:id/delete", authMiddleware, userController.deleteUser)
 router.patch("/:id", userController.updateUser)
 router.patch("/:id/active", userController.toggleActiveUser)
 

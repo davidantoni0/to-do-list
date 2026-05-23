@@ -39,7 +39,17 @@ export class UserService{
     };
 
     delete = async (userId: number)=>{
-        const user = this.userRepository.findOne({ where:{idUser: userId}});
+        const user = await this.userRepository.findOne({ where:{idUser: userId}});
+        console.log(user)
+        if (!user) {
+            throw new NotFoundError("Usuario não encontrado.")
+        }
+        if (user.isActive === true) {
+            throw new BadRequestError("Usuario ativo não pode ser excluído.")
+        }
+        if (user.task && user.task.length > 0) {
+            throw new BadRequestError("Usuario com tarefas associadas não pode ser excluído.")
+        }
         return await this.userRepository.delete(userId);
     };
 

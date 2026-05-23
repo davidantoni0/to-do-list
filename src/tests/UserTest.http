@@ -1,31 +1,32 @@
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk0MDA0NzMsImV4cCI6MTc3OTQyOTI3M30.yp01bCqBboprkq7wVXxtKoCh9IIo1MiQKSrbvTU3WwY
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk1MzcxMjMsImV4cCI6MTc3OTU2NTkyM30.qvqdJAiw7YcvDy4LXSJXDHADFgX-BUo02XdtibjQM8Q
 
 
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-  "email": "teste@test.com",
+  "email": "test@test.com",
   "password": "123456"
 }
-
 ###
 
 GET http://localhost:3000/api/users/
 ###
+
 POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
     "name": "test",
     "lastName": "test",
-    "email": "teste3@test.com",
+    "email": "test@test.com",
     "password": "123456",
     "role": "user"
 }
-
 ###
-DELETE http://localhost:3000/api/users/
+
+DELETE http://localhost:3000/api/users/2/delete
+Authorization: Bearer {{authToken}}
 ###
 
 PATCH http://localhost:3000/api/users/2
@@ -34,9 +35,8 @@ Content-Type: application/json
 {
     "name": "test2",
     "lastName": "test2",
-    "email": "teste2@test.com"
+    "email": "test2@test.com"
 }
-
 ###
 
-PATCH http://localhost:3000/api/users/1/active
+PATCH http://localhost:3000/api/users/2/active

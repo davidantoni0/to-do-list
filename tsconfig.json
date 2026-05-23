@@ -3,11 +3,12 @@
       "target": "esnext",
       "module": "esnext",
       "moduleResolution": "node",
+      "ignoreDeprecations": "6.0", // this option serves to ignore the deprecation warning for the "emitDecoratorMetadata" option, which is required for NestJS to work properly. If removed, you will need to update your code to remove any usage of the "emitDecoratorMetadata" option, which may require significant changes to the codebase.
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "strictPropertyInitialization": false,
       "lib": ["ESNext"],
-      "allowSyntheticDefaultImports":true
+      "allowSyntheticDefaultImports": true
   
     }
   }
