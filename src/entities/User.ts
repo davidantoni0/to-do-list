@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
 import { Task } from "./Task";
 
@@ -34,7 +34,7 @@ export class User{
     password!: string;
 
     @Column({type: "enum", enum: UserRole, default: UserRole.USER})
-    @IsNotEmpty({ message: "O cargo('role') é obrigatório" })
+    @IsOptional()
     @IsEnum(UserRole, { message: "Cargo inválido('admin' ou 'user')" })
     role!: UserRole;
     

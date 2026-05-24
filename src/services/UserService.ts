@@ -26,11 +26,14 @@ export class UserService{
         if (existingUser) {
             throw new BadRequestError("Email fornecido já está em uso!");
         }
+        if(userData.role === UserRole.ADMIN){
+            throw new UnauthorizedError("Acesso negado. Apenas administradores podem criar outros administradores.");
+        }
         
         const hashedPassword = await bcrypt.hash(userData.password!, 10);
     return await this.userRepository.save({
       ...userData,
-      password: hashedPassword,
+      password: hashedPassword
     });
     };
 
