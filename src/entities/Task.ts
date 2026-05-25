@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { User } from "./User";
 import { IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
@@ -31,7 +31,7 @@ export class Task{
     @Column("integer")
     createdBy!: number;
 
-    @Column({type: "date", default: () => "CURRENT_DATE" })
+    @Column({ type: 'timestamp with time zone', default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;    
 
     @ManyToOne(()=> User, (user) => user.task)

@@ -33,7 +33,7 @@ export class TaskService {
         return this.taskRepository.save({ taskTitle, content, createdBy: createdby, taskStatus: TaskStatus.OPEN, user})
     };
     
-    update = async (idTask: number, idUser: number, data: Partial<Task>) => {
+    update = async (idTask: number, userRole: UserRole, data: Partial<Task>) => {
         const task = await this.taskRepository.findOne({
             where: { idTask: idTask },
             relations: ["user"]
@@ -41,8 +41,11 @@ export class TaskService {
         if (!task) {
             throw new NotFoundError("Task não encontrada.")
         }
-        if (task.user.idUser !== idUser) {
-            throw new UnauthorizedError("Você não tem permissa para atualizar esta tarefa")
+        if (userRole !== UserRole.ADMIN) {
+            throw new UnauthorizedError("Você não tem autorização para atualizar tarefas")
+        }
+        if (data.createdAt) {
+            throw new UnauthorizedError("O campo 'createdAt' não pode ser alterado")
         }
         this.taskRepository.merge(task, data)
         return await this.taskRepository.save(task);
@@ -56,6 +59,9 @@ export class TaskService {
         if (!task) {
             throw new NotFoundError("Task não encontrada.")
         }
+        if (userRole !== UserRole.ADMIN) {
+            throw new UnauthorizedError("Você não tem autorização para excluir tarefas")
+        }
         return await this.taskRepository.delete(idTask)
     }
 
@@ -68,7 +74,7 @@ export class TaskService {
             throw new NotFoundError("Task não encontrada.");
         }
         if (userRole !== UserRole.ADMIN && task.user.idUser !== idUser) {
-            throw new UnauthorizedError("Você não tem permissão para alterar esta task.");
+            throw new UnauthorizedError("Você não tem autorização para alterar esta task.");
         }
         if (userRole !== UserRole.ADMIN) {
             task.taskStatus = TaskStatus.PENDING;
@@ -92,7 +98,7 @@ export class TaskService {
             throw new NotFoundError("Usuário não encontrado.")
         }
         if (userRole !== UserRole.ADMIN) {
-            throw new UnauthorizedError("Você não tem permissão para delegar esta task.");
+            throw new UnauthorizedError("Você não tem autorização para delegar esta task.");
         }
         task.user.idUser = idUser
         await this.taskRepository.save(task);
