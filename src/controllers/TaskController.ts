@@ -19,10 +19,8 @@ export class TaskController {
         try {
             const { taskTitle, content} = req.body;
             const userRole = req.user_role;
-            const id = Number(req.params.id);
-            if (isNaN(id)) {
-                throw new BadRequestError("Id inválido");
-            }
+            const id = req.user_id
+            
             await this.taskService.validateSchema(req.body);
             const newTask = await this.taskService.create(taskTitle, content, id, userRole!);
             return res.status(201).json(newTask);

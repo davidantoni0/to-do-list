@@ -4,6 +4,7 @@ import { Task, TaskStatus } from "../entities/Task";
 import { User, UserRole } from "../entities/User";
 import { formatErrors } from "../helpers/formatErrors";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../helpers/apiError";
+import { open } from "node:fs";
 
 
 export class TaskService {
@@ -24,14 +25,12 @@ export class TaskService {
     };
       
     create = async (taskTitle: string, content: string, idUser: number, userRole: UserRole) => {
-        const user = await this.userRepository.findOneBy({ idUser: idUser })
-        if (!user) {
-            throw new NotFoundError("Usuário não encontrado.")
-        }
         if (userRole !== UserRole.ADMIN) {
             throw new UnauthorizedError("Voçê não tem autorização para criar novas tarefas")
         }
-        return this.taskRepository.save({ taskTitle, content, user })
+        const user = await this.userRepository.findOneBy({ idUser: idUser })
+        const createdby = idUser
+        return this.taskRepository.save({ taskTitle, content, createdBy: createdby, taskStatus: TaskStatus.OPEN, user})
     };
     
     update = async (idTask: number, idUser: number, data: Partial<Task>) => {
