@@ -29,6 +29,6 @@ export class Task{
     taskStatus!: TaskStatus;
     
 
-    @ManyToOne(()=> User, (user) => user.task,{onDelete: "CASCADE"})
-    user!:User;
+    @ManyToOne(()=> User, (user) => user.task)
+    user?:User;
 }

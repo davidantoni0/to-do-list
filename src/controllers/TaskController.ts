@@ -24,7 +24,7 @@ export class TaskController {
                 throw new BadRequestError("Id inválido");
             }
             await this.taskService.validateSchema(req.body);
-            const newTask = await this.taskService.create(taskTitle, content, id, userRole);
+            const newTask = await this.taskService.create(taskTitle, content, id, userRole!);
             return res.status(201).json(newTask);
         } catch (error: unknown) {
             next(error);
@@ -39,7 +39,7 @@ export class TaskController {
                 throw new BadRequestError("Id inválido.");
             }
             await this.taskService.validateSchema(req.body, true);
-            const task = await this.taskService.update(taskId, userId, req.body);
+            const task = await this.taskService.update(taskId, userId!, req.body);
             return res.status(200).json(task);
         } catch (error : unknown) {
             next(error);
@@ -54,7 +54,7 @@ export class TaskController {
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
-            await this.taskService.delete(id, userId, userRole);
+            await this.taskService.delete(id, userId!, userRole!);
             return res.status(204).send();
         } catch (error: unknown) {
             next(error);
@@ -69,7 +69,7 @@ export class TaskController {
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
-            const task = await this.taskService.changeStatus(id, userId, userRole);
+            const task = await this.taskService.changeStatus(id, userId!, userRole!);
             return res.status(200).json(task);
         } catch (error: unknown) {
             next(error)
@@ -87,7 +87,7 @@ export class TaskController {
             if (isNaN(userId)) {
                 throw new BadRequestError("Id de usuario inválido");
             }
-            const task = await this.taskService.delegate(id, userId, userRole);
+            const task = await this.taskService.delegate(id, userId, userRole!);
             return res.status(200).json(task);
         } catch (error: unknown) {
             next(error)
