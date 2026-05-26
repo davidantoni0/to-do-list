@@ -19,10 +19,8 @@ export class TaskController {
         try {
             const { taskTitle, content} = req.body;
             const userRole = req.user_role;
-            const id = Number(req.params.id);
-            if (isNaN(id)) {
-                throw new BadRequestError("Id inválido");
-            }
+            const id = req.user_id;
+            
             await this.taskService.validateSchema(req.body);
             const newTask = await this.taskService.create(taskTitle, content, id, userRole!);
             return res.status(201).json(newTask);
@@ -34,12 +32,12 @@ export class TaskController {
     updateTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const taskId = Number(req.params.id);
-            const userId = req.user_id
+            const userRole = req.user_role;
             if (isNaN(taskId)) {
                 throw new BadRequestError("Id inválido.");
             }
             await this.taskService.validateSchema(req.body, true);
-            const task = await this.taskService.update(taskId, userId!, req.body);
+            const task = await this.taskService.update(taskId, userRole!, req.body);
             return res.status(200).json(task);
         } catch (error : unknown) {
             next(error);
@@ -49,8 +47,8 @@ export class TaskController {
     deleteTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id);
-            const userId = req.user_id
-            const userRole = req.user_role
+            const userId = req.user_id;
+            const userRole = req.user_role;
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
@@ -64,8 +62,8 @@ export class TaskController {
     changeTaskStatus = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id);
-            const userId = req.user_id
-            const userRole = req.user_role
+            const userId = req.user_id;
+            const userRole = req.user_role;
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
@@ -80,7 +78,7 @@ export class TaskController {
         try {
             const id = Number(req.params.id);
             const userId = Number(req.body.idUser);
-            const userRole = req.user_role
+            const userRole = req.user_role;
             if (isNaN(id)) {
                 throw new BadRequestError("Id inválido");
             }
