@@ -2,10 +2,10 @@
 //admin @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5Mzk4OTk5LCJleHAiOjE3Nzk0Mjc3OTl9.peeeLaEm47ETa7euk4qta3kZvknn9wTtGsrMgf2BPaU
 //user @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk0MDA3NzYsImV4cCI6MTc3OTQyOTU3Nn0.a-qXrMtLZD8QjO6RLqMb3cgbsL7LHX2iaIGGtvWR0nA
 
+#listagem de tarefas
 GET http://localhost:3000/api/tasks
-
 ###
-
+#criação de tarefas
 POST http://localhost:3000/api/tasks/1
 Content-Type: application/json 
 Authorization: Baerer {{authToken}}
@@ -15,9 +15,8 @@ Authorization: Baerer {{authToken}}
     "content": "rua",
     "taskStatus": "open"
 }
-
 ###
-
+#atualização de tarefas
 PATCH http://localhost:3000/api/tasks/1
 Content-Type: application/json
 Authorization: Baerer {{authToken}}
@@ -26,17 +25,16 @@ Authorization: Baerer {{authToken}}
     "taskTitle": "teste atualizado",
     "content": "funcionando2"
 }
-
 ###
-
+#exclusão de tarefas
 DELETE http://localhost:3000/api/tasks/3
 Authorization: Baerer {{authToken}}
 ###
-
+#mudança de status de tarefas
 PATCH  http://localhost:3000/api/tasks/2/changeStatus
 Authorization: Baerer {{authToken}}
 ###
-
+#delegação de tarefas à outros usuarios
 PATCH  http://localhost:3000/api/tasks/2/delegate
 Content-Type: application/json
 Authorization: Baerer {{authToken}}
@@ -44,5 +42,4 @@ Authorization: Baerer {{authToken}}
 {
     "idUser": "3"
 }
-
 ###
