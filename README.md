@@ -34,6 +34,8 @@ OBS: tenha certeza de que todas as ferramentas estejam instaladas antes de execu
 
 2- copie todos os elementos do arquivo .env.example e crie um novo arquivo .env na raiz do projeto. para a criação da JWT_PASS, o comando 'node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"' pode ser executado no prompt de comando para a criação da secret.
 
-3- As rotas para testes de requisição estão na pasta 'src/tests'. para a execução da maioria dos testes, será necessário a criação de usuarios/administradores, além da geração de tokens que podem ser geradas pela rota de login. ao gerar o token, lembre -se de colar o mesmo no elemento @authToken que se encontra nas pastas de teste.
+3- para exeutar o projeto, basta executar o comando 'npm run dev'.
 
-4- O sistema atualmente é fortemente focado nas permissões de administrador, portanto, certos elementos estarão bloqueados à usuarios. ao executar o comando post para criação de usuarios, deve-se alterar o cargo 'role' de 'usuario' para 'admin' diretamente no banco de dados. Essa medida foi criada afim de evitar a criação de admins diretamente pela rota de criação. novos administradores podem ser criados caso o token da requisição for de outro administrador.
+4- As rotas para testes de requisição estão na pasta 'src/tests'. para a execução da maioria dos testes, será necessário a criação de usuarios/administradores, além da geração de tokens que podem ser geradas pela rota de login. ao gerar o token, lembre -se de colar o mesmo no elemento @authToken que se encontra nas pastas de teste.
+
+5- O sistema atualmente é fortemente focado nas permissões de administrador, portanto, certos elementos estarão bloqueados à usuarios. ao executar o comando post para criação de usuarios, deve-se alterar o cargo 'role' de 'usuario' para 'admin' diretamente no banco de dados. Essa medida foi criada afim de evitar a criação de admins diretamente pela rota de criação. novos administradores podem ser criados caso o token da requisição for de outro administrador.
