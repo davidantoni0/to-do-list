@@ -1,5 +1,5 @@
 @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5NTcwMDA4LCJleHAiOjE3Nzk1OTg4MDh9.2G6of8c9XuN9a1IV5GtJGzSxTCrBnUVZt5tuhWDgp48
-
+#login
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
@@ -7,27 +7,27 @@ Content-Type: application/json
   "email": "test3@test.com",
   "password": "123456"
 }
-###
-
+### 
+#listagem de usuarios
 GET http://localhost:3000/api/users/
 ###
-
+#criação de usuarios
 POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
     "name": "test",
     "lastName": "test",
-    "email": "test3@test.com",
+    "email": "test2@test.com",
     "role": "user",
     "password": "123456"
 }
 ###
-
+#exclusão de usuarios
 DELETE http://localhost:3000/api/users/4/delete
 Authorization: Bearer {{authToken}}
 ###
-
+#edição de usuarios
 PATCH http://localhost:3000/api/users/2
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
@@ -40,6 +40,6 @@ Authorization: Bearer {{authToken}}
     "password": "123456"
 }
 ###
-
+#verificação de usuarios ativos
 PATCH http://localhost:3000/api/users/4/active
 Authorization: Bearer {{authToken}}
