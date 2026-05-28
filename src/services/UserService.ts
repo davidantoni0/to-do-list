@@ -78,10 +78,10 @@ export class UserService{
             data.password = hashedPassword;
         }
         if(data.role){
-            if(user.role !== UserRole.ADMIN){
+            if(userRole !== UserRole.ADMIN){
                 throw new UnauthorizedError("Acesso negado. Apenas administradores podem modificar o cargo de um usuário.");
             }
-            if(user.role === UserRole.ADMIN && requestingUserId !== userId){
+            if(userRole === UserRole.ADMIN && requestingUserId !== userId){
                 throw new UnauthorizedError("Acesso negado. Administradores não podem modificar o cargo de outros administradores.");
             }
         }
