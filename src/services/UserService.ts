@@ -27,7 +27,7 @@ export class UserService{
             throw new BadRequestError("Email fornecido já está em uso!");
         }
         if(userData.role === UserRole.ADMIN){
-            throw new UnauthorizedError("Acesso negado. novos usuarios não podem ter o cargo de administrador.");
+            throw new UnauthorizedError("Acesso negado. Novos usuarios não podem ter o cargo de administrador.");
         }
         
         const hashedPassword = await bcrypt.hash(userData.password!, 10);
