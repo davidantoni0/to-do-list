@@ -1,4 +1,4 @@
-@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5Mzk4OTk5LCJleHAiOjE3Nzk0Mjc3OTl9.peeeLaEm47ETa7euk4qta3kZvknn9wTtGsrMgf2BPaU
+@authToken =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMDA1MDE0LCJleHAiOjE3ODAwMzM4MTR9.LqQ6IjhorvScBzVEAsWFwBxU-rYke3ekQN7Ce6izvJU
 //admin @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc5Mzk4OTk5LCJleHAiOjE3Nzk0Mjc3OTl9.peeeLaEm47ETa7euk4qta3kZvknn9wTtGsrMgf2BPaU
 //user @authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3Nzk0MDA3NzYsImV4cCI6MTc3OTQyOTU3Nn0.a-qXrMtLZD8QjO6RLqMb3cgbsL7LHX2iaIGGtvWR0nA
 
@@ -6,7 +6,7 @@
 GET http://localhost:3000/api/tasks
 ###
 #criação de tarefas
-POST http://localhost:3000/api/tasks/1
+POST http://localhost:3000/api/tasks
 Content-Type: application/json 
 Authorization: Baerer {{authToken}}
 
@@ -35,11 +35,11 @@ PATCH  http://localhost:3000/api/tasks/2/changeStatus
 Authorization: Baerer {{authToken}}
 ###
 #delegação de tarefas à outros usuarios
-PATCH  http://localhost:3000/api/tasks/2/delegate
+PATCH  http://localhost:3000/api/tasks/1/delegate
 Content-Type: application/json
 Authorization: Baerer {{authToken}}
 
 {
-    "idUser": "3"
+    "idUser": "1"
 }
 ###

@@ -100,7 +100,7 @@ export class TaskService {
         if (userRole !== UserRole.ADMIN) {
             throw new UnauthorizedError("Você não tem autorização para delegar esta task.");
         }
-        task.user.idUser = idUser
+        task.user = user
         await this.taskRepository.save(task);
         return task;
     };
